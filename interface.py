@@ -17,27 +17,28 @@ class MainWindow(Gtk.Window):
         label2 = Gtk.Label(label="value2")
         label3 = Gtk.Label(label="value3")
         
-        button = Gtk.Button(label="get data")
-        button.connect("clicked", self.show_wind)
+        button = Gtk.Button(label="refresh")
+        button.connect("clicked", self.refresh)
         self.grid = Gtk.Grid()
         self.grid.set_column_spacing(50)
         #grid.attach(label1, 0, 1, 1, 1)
         #grid.attach(label2, 0, 2, 1, 1)
         #grid.attach(label3, 0, 3, 1, 1)
-        #grid.attach_next_to(button, label1, Gtk.PositionType.BOTTOM, 2, 1)
-        #self.add(self.grid)
+        self.grid.attach(button,3, 4 , 2, 1)
         self.gen_labels()
-
-
+    
     def gen_labels(self):
-        """instead of making labels one by one this method generated all the needed labels at once in a Gtk grid"""
+        """instead of making labels one by one 
+        this method generated all the needed labels at once in a Gtk grid
+        and it fill them with the data from the api"""
+        api = ApiParser(API_URL)
         for i in range(5):
-            for j in range(5):
-                self.grid.attach(Gtk.Label(label="lbl"), i, j, 1, 1)
-        
-                
+            self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
+   
         self.add(self.grid)
 
+    def refresh(self, button):
+        self.gen_labels()
 
 win = MainWindow()
 win.connect("destroy", Gtk.main_quit)

@@ -5,10 +5,12 @@ class ApiError(Exception):
         self.expression = expression
         self.message = message
 
+
 class ApiParser():
     def __init__(self, api_url):
         self.url = api_url
-    
+        self._dates_lst = self._get_list()
+
     def _request(self):
         '''a helper methode that call the GET requests and return the reposnse if it was a success 
 otherwise it raise an exception'''
@@ -58,9 +60,10 @@ otherwise it raise an exception'''
 
     def get_all_data(self):
         """this method uses the _get_data method to to exctract the all releated data to the weather app"""
-        return None #unfinished 
-        dates_lst = self._get_list()
-        print("data loaded!")
+        #return None #unfinished 
+        dates_lst = self._dates_lst
+        
+        
         result = []
         for i in range(len(dates_lst)):
             date_lst = dates_lst[i]["dt_txt"]
@@ -68,9 +71,9 @@ otherwise it raise an exception'''
             weather_desc_lst = self._get_data("weather")[i][1][0]["description"]
             wind_speed_lst = self._get_data("wind")[0][1]["speed"] 
             wind_deg_lst = self._get_data("wind")[0][1]["deg"] 
-            #yield date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst
+            yield date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst
             #result.append((date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst))
-        return  result
+        #return  result
 
     
 
