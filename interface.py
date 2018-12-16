@@ -12,6 +12,8 @@ API_URL = "http://api.openweathermap.org/data/2.5/forecast?q=London,us&appid={}"
 class MainWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Weather Forcast 0.1")
+        api = ApiParser(API_URL)
+        api_data = api.get_all_data()
         #self.set_default_size(400, 400)
         box = Gtk.Box(spacing=10)
         self.add(box)
@@ -19,7 +21,12 @@ class MainWindow(Gtk.Window):
         grid.set_column_spacing(50)
         day1, grid = self.gen_single_data(grid)
         box.pack_start(grid, True, True, 0)
-        day1["weather"].set_text("value changed!")
+        for i in api_data[0]:
+            day1["date"].set_text(i)
+            day1["weather"].set_text(i)
+            day1["weather_desc"].set_text(i)
+            day1["wind_speed"].set_text(i)
+            day1["wind_deg"].set_text(i)
 
         grid2 = Gtk.Grid()
         grid2.set_column_spacing(50)

@@ -20,7 +20,7 @@ class DB:
         con_err = self._connect()
         if not con_err:
             cur = self.con.cursor()
-            cur.excute("INSERT INTO dates(date_text, weather, weather_desc, wind_speed, wind_deg) VALUES(?, ?, ?, ?, ?)", (date_txt, weather, weather_desc, wind_speed, wind_deg))
+            cur.execute("INSERT INTO dates(date_txt, weather, weather_desc, wind_speed, wind_deg) VALUES(?, ?, ?, ?, ?)", (date_txt, weather, weather_desc, wind_speed, wind_deg))
             self.con.commit()
         else:
             return con_err
