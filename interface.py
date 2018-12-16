@@ -1,4 +1,5 @@
 from api_parser import ApiParser
+from db import DB
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -12,31 +13,46 @@ API_URL = "http://api.openweathermap.org/data/2.5/forecast?q=London,us&appid={}"
 class MainWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Weather Forcast 0.1")
-        api = ApiParser(API_URL)
-        api_data = api.get_all_data()
+        
         #self.set_default_size(400, 400)
+        db_data = DB("data.db") 
+        api_data = db_data.get_all_data()
+        print(api_data[0])
         box = Gtk.Box(spacing=10)
         self.add(box)
         grid = Gtk.Grid()
         grid.set_column_spacing(50)
         day1, grid = self.gen_single_data(grid)
-        box.pack_start(grid, True, True, 0)
-        for i in api_data[0]:
-            day1["date"].set_text(i)
-            day1["weather"].set_text(i)
-            day1["weather_desc"].set_text(i)
-            day1["wind_speed"].set_text(i)
-            day1["wind_deg"].set_text(i)
+        box.pack_start(grid, True, True, 0)   
+        day1["date"].set_text(str(api_data[0][1]))
+        day1["weather"].set_text(str(api_data[0][2]))
+        day1["weather_desc"].set_text(str(api_data[0][3]))
+        day1["wind_speed"].set_text(str(api_data[0][4]))
+        day1["wind_deg"].set_text(str(api_data[0][5]))
 
         grid2 = Gtk.Grid()
         grid2.set_column_spacing(50)
-        day1, grid2 = self.gen_single_data(grid2)
+        day2, grid2 = self.gen_single_data(grid2)
         box.pack_start(grid2, True, True, 0)
+        day2["date"].set_text(str(api_data[1][1]))
+        day2["weather"].set_text(str(api_data[1][2]))
+        day2["weather_desc"].set_text(str(api_data[1][3]))
+        day2["wind_speed"].set_text(str(api_data[1][4]))
+        day2["wind_deg"].set_text(str(api_data[1][5]))
+
 
         grid3 = Gtk.Grid()
         grid3.set_column_spacing(50)
-        day1, grid3 = self.gen_single_data(grid3)
+        day3, grid3 = self.gen_single_data(grid3)
         box.pack_start(grid3, True, True, 0)
+        day3["date"].set_text(str(api_data[2][1]))
+        day3["weather"].set_text(str(api_data[2][2]))
+        day3["weather_desc"].set_text(str(api_data[2][3]))
+        day3["wind_speed"].set_text(str(api_data[2][4]))
+        day3["wind_deg"].set_text(str(api_data[2][5]))
+        
+        
+        
         #self.add(grid)
 
         #button = Gtk.Button(label="refresh")
@@ -66,13 +82,13 @@ class MainWindow(Gtk.Window):
         grid.attach(lbl_dict["wind_deg"],     0, 5, 1, 1)
         return (lbl_dict, grid)
 
-    def gen_labels(self):
-        """instead of making labels one by one 
-        this method generated all the needed labels at once in a Gtk grid
-        and it fill them with the data from the api"""
-        api = ApiParser(API_URL)
-        for i in range(5):
-            self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
+    #def gen_labels(self):
+     #   """instead of making labels one by one 
+      #  this method generated all the needed labels at once in a Gtk grid
+       # and it fill them with the data from the api"""
+        #api = ApiParser(API_URL)
+        #for i in range(5):
+        #    self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
    
         #self.add(self.grid)
 
