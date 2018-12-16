@@ -15,12 +15,12 @@ class DB:
             return "Error {}:".format(e.args[0])
             
     
-    def Add_data(self, date_txt, weather, weather_desc, wind_speed, wind_deg):
+    def Add_data(self,temp, date_txt, weather, weather_desc, wind_speed, wind_deg):
         """this method adds the concerned data to the database"""
         con_err = self._connect()
         if not con_err:
             cur = self.con.cursor()
-            cur.execute("INSERT INTO dates(date_txt, weather, weather_desc, wind_speed, wind_deg) VALUES(?, ?, ?, ?, ?)", (date_txt, weather, weather_desc, wind_speed, wind_deg))
+            cur.execute("INSERT INTO dates(temp, date_txt, weather, weather_desc, wind_speed, wind_deg) VALUES(?, ?, ?, ?, ?, ?)", (temp, date_txt, weather, weather_desc, wind_speed, wind_deg))
             self.con.commit()
         else:
             return con_err

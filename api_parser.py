@@ -55,7 +55,7 @@ otherwise it raise an exception'''
 
     def get_temperature(self):
         """this method uses the _get_data method to to exctract the wind releated data"""
-        pass
+        return self._get_data("main")
 
 
     def get_all_data(self):
@@ -67,11 +67,12 @@ otherwise it raise an exception'''
         result = []
         for i in range(len(dates_lst)):
             date_lst = dates_lst[i]["dt_txt"]
+            temp_lst = self._get_data("main")[i][1]["temp"]
             weather_lst = self._get_data("weather")[i][1][0]["main"]
             weather_desc_lst = self._get_data("weather")[i][1][0]["description"]
-            wind_speed_lst = self._get_data("wind")[0][1]["speed"] 
-            wind_deg_lst = self._get_data("wind")[0][1]["deg"] 
-            yield date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst
+            wind_speed_lst = self._get_data("wind")[i][1]["speed"] 
+            wind_deg_lst = self._get_data("wind")[i][1]["deg"] 
+            yield temp_lst, date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst
             #result.append((date_lst, weather_lst, weather_desc_lst, wind_speed_lst, wind_deg_lst))
         #return  result
 
