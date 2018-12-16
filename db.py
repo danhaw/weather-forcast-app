@@ -33,8 +33,16 @@ class DB:
             cur.execute("SELECT * FROM dates")
             return cur.fetchall()
         else:
-             return con_err 
+            return con_err    
 
+    def clear_data(self):
+        con_err = self._connect()
+        if not con_err:
+            cur = self.con.cursor()
+            cur.execute("DELETE FROM dates")
+            self.con.commit()
+        else:
+            return con_err 
 
 
 

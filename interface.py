@@ -17,12 +17,18 @@ class MainWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Weather Forcast 0.1")
         
-        #self.set_default_size(400, 400)
+        #getting data from the database
         db_data = DB("data.db") 
         api_data = db_data.get_all_data()
+
         box = Gtk.Box(spacing=10)
         self.add(box)
+
+        #this lambda function convert from Kelvin to Celsius 
         kel_to_c = lambda k: round(k - 273.15) 
+
+        #there is a better way to do this for sure but I don't know enough of Gtk+ :')
+        #here I set the the data that I got from the database to the labels text  
         grid = Gtk.Grid()
         grid.set_column_spacing(50)
         day1, grid = self.gen_single_data(grid)
@@ -67,22 +73,15 @@ class MainWindow(Gtk.Window):
         day4["weather_desc"].set_text(str(api_data[25][3]))
         day4["wind_speed"].set_text(str(api_data[25][4]))
         day4["wind_deg"].set_text(str(api_data[25][5]))
-        
-        #self.add(grid)
 
-        #button = Gtk.Button(label="refresh")
-        #button.connect("clicked", self.refresh)
-        #self.grid = Gtk.Grid()
-        #self.grid.set_column_spacing(50)
-        #grid.attach(label1, 0, 1, 1, 1)
-        #grid.attach(label2, 0, 2, 1, 1)
-        #grid.attach(label3, 0, 3, 1, 1)
-        #self.grid.attach(button,3, 4 , 2, 1)
-        #self.add(grid)
+        refresh_btn = Gtk.Button(label="refresh")
+        box.pack_start(refresh_btn, True, True, 0)
         
-        #self.gen_labels()
+        
     
     def gen_single_data(self, grid):
+        """this method generate the required labels
+         and put them in the grid then it returns thier handles and the modified grid"""
         lbl_dict = {}
         lbl_dict["temp"] = Gtk.Label(label="value1")
         lbl_dict["date"] = Gtk.Label(label="value1")
@@ -100,17 +99,17 @@ class MainWindow(Gtk.Window):
         return (lbl_dict, grid)
 
     #def gen_labels(self):
-     #   """instead of making labels one by one 
-      #  this method generated all the needed labels at once in a Gtk grid
-       # and it fill them with the data from the api"""
-        #api = ApiParser(API_URL)
-        #for i in range(5):
-        #    self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
-   
-        #self.add(self.grid)
-
-    def refresh(self, button):
-        self.gen_labels()
+    #   """instead of making labels one by one 
+    #    this method generated all the needed labels at once in a Gtk grid
+    #    and it fill them with the data from the api"""
+    #    api = ApiParser(API_URL)
+    #    for i in range(5):
+    #    self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
+    #
+    #    self.add(self.grid)
+    #
+    #def refresh(self, button):
+    #   self.gen_labels()
 
 win = MainWindow()
 win.connect("destroy", Gtk.main_quit)
