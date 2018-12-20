@@ -30,6 +30,7 @@ class MainWindow(Gtk.Window):
 
         refresh_btn = Gtk.Button(label="refresh")
         self.box.pack_start(refresh_btn, True, True, 0)
+        refresh_btn.connect("clicked", self.refresh)
         
         
     def display_all_data(self, api_data):

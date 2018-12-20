@@ -36,7 +36,7 @@ otherwise it raise an exception'''
     def _get_data(self, data_name):
         """helper method that extact the data from the api response depending on it's name"""
         data_list = []
-        dates_list = self._get_list()
+        dates_list = self._dates_lst
         for i in range(len(dates_list)):
             date = dates_list[i]["dt_txt"]
             data_item = dates_list[i][data_name]

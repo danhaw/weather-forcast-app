@@ -1,11 +1,11 @@
 
 def create_db():
-    pass
+    import create_db
 
 def fill_db():
-    pass
+    import fill_db
 
 
 def clear_db():
-    pass
+    import clear_db
 
