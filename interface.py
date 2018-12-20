@@ -24,56 +24,9 @@ class MainWindow(Gtk.Window):
 
         self.box = Gtk.Box(spacing=10)
         self.add(self.box)
-
-        #this lambda function convert from Kelvin to Celsius 
-        kel_to_c = lambda k: round(k - 273.15) 
         self.display_all_data(api_data)
-        #there is a better way to do this for sure but I don't know enough of Gtk+ :')
-        #here I set the the data that I got from the database to the labels text  
-        # grid = Gtk.Grid()
-        # grid.set_column_spacing(50)
-        # day1, grid = self.display_single_data(grid)
-        # self.box.pack_start(grid, True, True, 0)   
-        # day1["temp"].set_text(str(kel_to_c(api_data[0][0]))+ '°')
-        # day1["date"].set_text(str(api_data[0][1]))
-        # day1["weather"].set_text(str(api_data[0][2]))
-        # day1["weather_desc"].set_text(str(api_data[0][3]))
-        # day1["wind_speed"].set_text(str(api_data[0][4]))
-        # day1["wind_deg"].set_text(str(api_data[0][5]))
-
-        # grid2 = Gtk.Grid()
-        # grid2.set_column_spacing(50)
-        # day2, grid2 = self.display_single_data(grid2)
-        # self.box.pack_start(grid2, True, True, 0)
-        # day2["temp"].set_text(str(kel_to_c(api_data[10][0]))+ '°')
-        # day2["date"].set_text(str(api_data[10][1]))
-        # day2["weather"].set_text(str(api_data[10][2]))
-        # day2["weather_desc"].set_text(str(api_data[10][3]))
-        # day2["wind_speed"].set_text(str(api_data[10][4]))
-        # day2["wind_deg"].set_text(str(api_data[10][5]))
-
-
-        # grid3 = Gtk.Grid()
-        # grid3.set_column_spacing(50)
-        # day3, grid3 = self.display_single_data(grid3)
-        # self.box.pack_start(grid3, True, True, 0)
-        # day3["temp"].set_text(str(kel_to_c(api_data[17][0]))+ '°')
-        # day3["date"].set_text(str(api_data[17][1]))
-        # day3["weather"].set_text(str(api_data[17][2]))
-        # day3["weather_desc"].set_text(str(api_data[17][3]))
-        # day3["wind_speed"].set_text(str(api_data[17][4]))
-        # day3["wind_deg"].set_text(str(api_data[17][5]))
         
-        # grid4 = Gtk.Grid()
-        # grid4.set_column_spacing(50)
-        # day4, grid4 = self.display_single_data(grid4)
-        # self.box.pack_start(grid4, True, True, 0)
-        # day4["temp"].set_text(str(kel_to_c(api_data[25][0]))+ '°')
-        # day4["date"].set_text(str(api_data[25][1]))
-        # day4["weather"].set_text(str(api_data[25][2]))
-        # day4["weather_desc"].set_text(str(api_data[25][3]))
-        # day4["wind_speed"].set_text(str(api_data[25][4]))
-        # day4["wind_deg"].set_text(str(api_data[25][5]))
+
 
         refresh_btn = Gtk.Button(label="refresh")
         self.box.pack_start(refresh_btn, True, True, 0)
@@ -120,18 +73,6 @@ class MainWindow(Gtk.Window):
         scripts.fill_db()
 
 
-    #def gen_labels(self):
-    #   """instead of making labels one by one 
-    #    this method generated all the needed labels at once in a Gtk grid
-    #    and it fill them with the data from the api"""
-    #    api = ApiParser(API_URL)
-    #    for i in range(5):
-    #    self.grid.attach(Gtk.Label(label=next(api.get_all_data())),0, i, 1, 1) 
-    #
-    #    self.add(self.grid)
-    #
-    #def refresh(self, button):
-    #   self.gen_labels()
 
 win = MainWindow()
 win.connect("destroy", Gtk.main_quit)
