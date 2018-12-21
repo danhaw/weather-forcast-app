@@ -11,9 +11,9 @@ with open("api_key.txt") as f:
     api_key = f.read()
 
 
-
-
 API_URL = "http://api.openweathermap.org/data/2.5/forecast?q=London,us&appid={}".format(api_key)
+
+
 class MainWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Weather Forcast 0.1")
@@ -72,6 +72,13 @@ class MainWindow(Gtk.Window):
     def refresh(self, button):
         scripts.clear_db()
         scripts.fill_db()
+
+        #getting data from the database
+        db_data = DB("data.db") 
+        api_data = db_data.get_all_data()
+
+        #displaying the data in the window
+        self.display_all_data(api_data)
 
 
 

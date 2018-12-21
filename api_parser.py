@@ -60,11 +60,8 @@ otherwise it raise an exception'''
 
     def get_all_data(self):
         """this method uses the _get_data method to to exctract the all releated data to the weather app"""
-        #return None #unfinished 
         dates_lst = self._dates_lst
-        
-        
-        result = []
+        #result = []
         for i in range(len(dates_lst)):
             date_lst = dates_lst[i]["dt_txt"]
             temp_lst = self._get_data("main")[i][1]["temp"]
