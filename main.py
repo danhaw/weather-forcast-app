@@ -24,7 +24,9 @@ class MainWindow(Gtk.Window):
 
         self.box = Gtk.Box(spacing=10)
         self.add(self.box)
-        self.display_all_data(api_data)
+        
+        #saving the labels handle for the refresh method
+        self.current_data = self.display_all_data(api_data)
         
 
 
@@ -33,7 +35,7 @@ class MainWindow(Gtk.Window):
         refresh_btn.connect("clicked", self.refresh)
         
         
-    def display_all_data(self, api_data):
+    def display_all_data(self, api_data, current_data=None):
         '''here I set the the data that I got from the database to the labels text,
         then display them in the grid '''
         kel_to_c = lambda k: round(k - 273.15) #this lambda function convert from Kelvin to Celsius 
@@ -41,13 +43,17 @@ class MainWindow(Gtk.Window):
             grid = Gtk.Grid()
             grid.set_column_spacing(50)
             self.box.pack_start(grid, True, True, 0)
-            day, grid = self._display_single_data(grid)
+            if current_data:
+                day, grid = current_data
+            else:
+                day, grid = self._display_single_data(grid)
             day["temp"].set_text(str(kel_to_c(api_data[i][0]))+ '°')
             day["date"].set_text(str(api_data[i][1]))
             day["weather"].set_text(str(api_data[i][2]))
             day["weather_desc"].set_text(str(api_data[i][3]))
             day["wind_speed"].set_text(str(api_data[i][4]))
             day["wind_deg"].set_text(str(api_data[i][5]))
+        return (day, grid)
 
     def _display_single_data(self, grid):
         """this method generate the required labels
@@ -77,8 +83,8 @@ class MainWindow(Gtk.Window):
         db_data = DB("data.db") 
         api_data = db_data.get_all_data()
 
-        #displaying the data in the window
-        self.display_all_data(api_data)
+        #displaying the data in the window and 
+        self.current_data = self.display_all_data(api_data, self.current_data)
 
 
 
